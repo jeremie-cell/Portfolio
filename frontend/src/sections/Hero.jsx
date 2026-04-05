@@ -43,7 +43,7 @@ const Hero = () => {
                         <h1>that Deliver results</h1>
                     </div>
                     <p className="text-white-50 md:text-xl relative z-10 pointer-events-none">
-                            Hi, I'm Jeremie a student in Western Institute of Technology
+                            Hi, I'm Jeremie Balondon a student in Western Institute of Technology
                         </p>
                         <Button 
                         className = "md:w-80 md:h-16 w-60 h-12"
