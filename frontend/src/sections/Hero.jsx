@@ -5,6 +5,7 @@ import HeroExperience from '../components/HeroModels/HeroExperience.jsx'
 import {useGSAP} from '@gsap/react';
 import gsap from 'gsap';
 import AnimatedCounter from '../components/AnimatedCounter.jsx';
+
 const Hero = () => {
     useGSAP(()=>{
         gsap.fromTo(
@@ -14,6 +15,7 @@ const Hero = () => {
             
         )
     })
+
   return (
     <section id="Hero" className="relative overflow-hidden">
         <div className="absolute top-0 left-0 z-10">

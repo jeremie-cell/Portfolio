@@ -11,6 +11,7 @@ const ShowcaseSection = () => {
   const RecordRef = useRef(null);
   const libraryRef = useRef(null);
   const ycDirectoryRef = useRef(null);
+  const VotaraRef = useRef(null);
 
    useGSAP(() => {
     gsap.fromTo(
@@ -19,7 +20,7 @@ const ShowcaseSection = () => {
       { opacity: 1, duration: 1.5 }
     );
 
-    const cards = [RecordRef.current, libraryRef.current, ycDirectoryRef.current];
+    const cards = [RecordRef.current, libraryRef.current, ycDirectoryRef.current, VotaraRef.current];
 
     cards.forEach((card, index) => {
       gsap.fromTo(
@@ -76,6 +77,13 @@ const ShowcaseSection = () => {
                 <img src="/images/letsgo.png" alt="Let's Go" />
               </div>
               <h2>Let's Go</h2>
+            </div>
+
+            <div className="project" ref={VotaraRef}>
+              <div className="image-wrapper bg-[#FFD8E6]">
+                <img src="/images/Votara.png" alt="Votara" />
+              </div>
+              <h2>Votara</h2>
             </div>
           </div>
         </div>
