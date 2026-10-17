@@ -493,3 +493,128 @@ section {
     transition: none;
   }
 }
+/* Prevent horizontal overflow */
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+section {
+  width: 100%;
+  min-width: 0;
+}
+
+/* Ensure 3D canvases stay inside their containers */
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+/* Keep the hero layout within the viewport */
+.hero-3d-layout {
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  .tech-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tech-card {
+    min-width: 0;
+  }
+
+  .tech-icon-wrapper {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+.contact-3d-container {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #282732;
+  border-radius: 24px;
+  background: #0e0e10;
+}
+
+.contact-3d-container canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  .contact-3d-container {
+    height: 320px;
+    border-radius: 18px;
+  }
+}
+
+.tech-icon-canvas {
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+}
+
+.tech-icon-canvas canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.tech-icon-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 240px;
+  padding: 32px;
+}
+
+.tech-icon-fallback img {
+  display: block;
+  width: 120px;
+  height: 120px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.tech-icon-loading {
+  width: 100%;
+  height: 240px;
+}
+
+@media (max-width: 768px) {
+  .tech-icon-canvas,
+  .tech-icon-loading {
+    min-height: 180px;
+    height: 180px;
+  }
+
+  .tech-icon-fallback {
+    height: 180px;
+    padding: 24px;
+  }
+
+  .tech-icon-fallback img {
+    width: 90px;
+    height: 90px;
+  }
+}
+
+/* Enlarge Anime.js logo on mobile */
+@media (max-width: 768px) {
+  .tech-icon-fallback img[src*="anime"] {
+    width: 250px;
+    height: 250px;
+    max-width: none;
+    transform: scale(1.2);
+  }
+}

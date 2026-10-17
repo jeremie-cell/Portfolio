@@ -94,31 +94,31 @@ const techStackIcons = [
   {
     name: "React Frontend",
     modelPath: "/models/react_logo-transformed.glb",
-    scale: 1,
+    scale: 0.6,
     rotation: [0, 0, 0],
   },
   {
     name: "Node Backend",
     modelPath: "/models/node-transformed.glb",
-    scale: 5,
+    scale: 3,
     rotation: [0, -Math.PI / 2, 0],
   },
   {
     name: "Three.js 3D Interactive Model",
     modelPath: "/models/three.js-transformed.glb",
-    scale: 0.05,
+    scale: 0.03,
     rotation: [0, 0, 0],
   },
     {
     name: "Tailwindcss",
     modelPath: "/models/tailwindcss-logo.glb",
-    scale: 50,
+    scale: 30,
     rotation: [0, -Math.PI / 2, 0],
   },
   {
     name: "Anime.js",
     modelPath: "/models/anime.glb",
-    scale: 1.1,
+    scale: 0.7,
     rotation: [0, -Math.PI / 2, 0],
   }
 ];
