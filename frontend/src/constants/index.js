@@ -118,7 +118,7 @@ const techStackIcons = [
   {
     name: "Anime.js",
     modelPath: "/models/anime.glb",
-    scale: 1.5,
+    scale: 1.1,
     rotation: [0, -Math.PI / 2, 0],
   }
 ];
