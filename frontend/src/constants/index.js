@@ -115,6 +115,12 @@ const techStackIcons = [
     scale: 50,
     rotation: [0, -Math.PI / 2, 0],
   },
+  {
+    name: "Anime.js",
+    modelPath: "/models/anime.glb",
+    scale: 1.5,
+    rotation: [0, -Math.PI / 2, 0],
+  }
 ];
 
 const expCards = [
