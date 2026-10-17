@@ -1,5 +1,5 @@
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import "./PageLoader.css";
 
@@ -7,54 +7,57 @@ const PageLoader = ({ onComplete }) => {
   const loaderRef = useRef(null);
   const numberRef = useRef(null);
   const progressRef = useRef(null);
-  const [progress, setProgress] = useState(0);
+  const trackRef = useRef(null);
 
   useEffect(() => {
+    const loader = loaderRef.current;
+    const number = numberRef.current;
+    const bar = progressRef.current;
+    const track = trackRef.current;
+
+    if (!loader || !number || !bar || !track) return;
+
     const counter = { value: 0 };
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
-    const timeline = gsap.timeline({
-      onComplete: () => {
-        gsap.to(loaderRef.current, {
-          opacity: 0,
-          y: -25,
-          duration: 0.65,
-          ease: "power3.inOut",
-          onComplete,
-        });
-      },
-    });
+    const context = gsap.context(() => {
+      const timeline = gsap.timeline({
+        onComplete,
+      });
 
-    timeline.to(counter, {
-      value: 100,
-      duration: 2.1,
-      ease: "power2.inOut",
-      onUpdate: () => {
-        const value = Math.round(counter.value);
+      timeline.to(counter, {
+        value: 100,
+        duration: reducedMotion ? 0.15 : 1.4,
+        ease: "power2.out",
+        onUpdate: () => {
+          const value = Math.round(counter.value);
 
-        if (numberRef.current) {
-          numberRef.current.textContent = `${value}`;
-        }
+          number.textContent = String(value);
+          bar.style.width = `${value}%`;
+          track.setAttribute("aria-valuenow", String(value));
+        },
+      });
 
-        if (progressRef.current) {
-          progressRef.current.style.width = `${value}%`;
-        }
+      timeline.to(loader, {
+        opacity: 0,
+        y: reducedMotion ? 0 : -20,
+        duration: reducedMotion ? 0.1 : 0.45,
+        ease: "power2.inOut",
+      });
+    }, loader);
 
-        setProgress(value);
-      },
-    });
-
-    return () => timeline.kill();
+    return () => context.revert();
   }, [onComplete]);
 
   return (
     <div className="page-loader" ref={loaderRef}>
-      {/* Background layers */}
       <div className="loader-background" />
       <div className="loader-overlay" />
 
-      {/* Animated star particles */}
       <div className="loader-stars" aria-hidden="true">
-        {Array.from({ length: 55 }, (_, i) => (
+        {Array.from({ length: 30 }, (_, i) => (
           <span
             key={i}
             className="loader-star"
@@ -69,7 +72,6 @@ const PageLoader = ({ onComplete }) => {
         ))}
       </div>
 
-      {/* Loader content stays in front */}
       <div className="loader-content">
         <div className="loader-number">
           <span ref={numberRef}>0</span>
@@ -80,11 +82,12 @@ const PageLoader = ({ onComplete }) => {
 
         <div
           className="loader-track"
+          ref={trackRef}
           role="progressbar"
           aria-label="Loading portfolio"
           aria-valuemin={0}
           aria-valuemax={100}
-          aria-valuenow={progress}
+          aria-valuenow={0}
         >
           <div className="loader-progress" ref={progressRef}>
             <span className="loader-glow" />
@@ -97,7 +100,6 @@ const PageLoader = ({ onComplete }) => {
         </div>
       </div>
 
-      {/* Decorative ambient lighting */}
       <div className="loader-orb loader-orb-cyan" />
       <div className="loader-orb loader-orb-purple" />
     </div>

@@ -35,77 +35,69 @@ const TechStack = () => {
     )
   }, { scope: sectionRef })
 
-  // Anime.js line animation for the title and subtitle
-  useEffect(() => {
-    if (!sectionRef.current) return
 
-    const elements = sectionRef.current.querySelectorAll(
-      '.experience-heading, .experience-subtitle'
-    )
+useEffect(() => {
+  if (!sectionRef.current) return;
 
-    const splits = []
+  const elements = sectionRef.current.querySelectorAll(
+    ".experience-heading, .experience-subtitle"
+  );
 
-    elements.forEach((element) => {
-      const split = splitText(element, {
-        lines: {
-          wrap: 'clip',
-        },
-      })
+  const splits = [];
+  const animations = [];
 
-      splits.push({ element, split })
-    })
+  elements.forEach((element) => {
+    const split = splitText(element, {
+      lines: {
+        wrap: "clip",
+      },
+    });
 
-    const hideLines = (split) => {
-      split.lines.forEach((line) => {
-        line.style.opacity = '0'
-        line.style.transform = 'translateY(100%)'
-      })
+    splits.push(split);
+
+    split.lines.forEach((line) => {
+      line.style.opacity = "0";
+      line.style.transform = "translateY(100%)";
+    });
+  });
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        const index = Array.from(elements).indexOf(entry.target);
+        const split = splits[index];
+
+        if (!split) return;
+
+        const animation = animate(split.lines, {
+          y: ["100%", "0%"],
+          opacity: [0, 1],
+          duration: 650,
+          delay: stagger(100),
+          ease: "out(3)",
+        });
+
+        animations.push(animation);
+        observer.unobserve(entry.target);
+      });
+    },
+    {
+      threshold: 0.1,
     }
+  );
 
-    splits.forEach(({ split }) => hideLines(split))
+  elements.forEach((element) => observer.observe(element));
 
-    const observers = splits.map(({ element, split }, index) => {
-      let animation = null
+  return () => {
+    observer.disconnect();
 
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            if (animation) animation.pause()
+    animations.forEach((animation) => animation.pause());
+    splits.forEach((split) => split.revert());
+  };
+}, []);
 
-            hideLines(split)
-
-            animation = animate(split.lines, {
-              y: ['100%', '0%'],
-              opacity: [0, 1],
-              duration: 750,
-              delay: stagger(120, {
-                start: index * 150,
-              }),
-              ease: 'out(3)',
-            })
-          } else {
-            if (animation) {
-              animation.pause()
-              animation = null
-            }
-
-            hideLines(split)
-          }
-        },
-        {
-          threshold: 0.1,
-        }
-      )
-
-      observer.observe(element)
-      return observer
-    })
-
-    return () => {
-      observers.forEach((observer) => observer.disconnect())
-      splits.forEach(({ split }) => split.revert())
-    }
-  }, [])
 
   return (
     <section
