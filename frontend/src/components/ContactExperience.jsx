@@ -19,7 +19,7 @@ const ContactExperience = () => {
         fov: isMobile ? 50 : 45,
       }}
       gl={{
-        antialias: false,
+        antialias: !isMobile,
         powerPreference: "high-performance",
         alpha: true,
       }}
@@ -35,6 +35,8 @@ const ContactExperience = () => {
       <OrbitControls
         enableZoom={false}
         enablePan={false}
+        enableRotate={!isMobile}
+        enableDamping={!isMobile}
         minPolarAngle={Math.PI / 5}
         maxPolarAngle={Math.PI / 2}
       />

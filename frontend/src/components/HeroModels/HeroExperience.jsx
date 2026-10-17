@@ -13,25 +13,26 @@ const HeroExperience = () => {
     query: "(max-width: 768px)",
   });
 
-  const isTablet = useMediaQuery({
-    query: "(max-width: 1024px)",
-  });
-
   return (
     <Canvas
       camera={{ position: [0, 0, 15], fov: 45 }}
-      dpr={isMobile ? 1 : [1, 1.5]}
+      dpr={isMobile ? 1 : [1, 1.25]}
       gl={{
         antialias: !isMobile,
         powerPreference: "high-performance",
         alpha: true,
       }}
+      onCreated={({ gl }) => {
+        gl.setClearColor(0x000000, 0);
+      }}
     >
       <ambientLight intensity={0.2} color="#1a1a40" />
 
       <OrbitControls
-        enablePan={false}
-        enableZoom={!isTablet}
+        enablePan={!isMobile}
+        enableZoom={!isMobile}
+        enableRotate={!isMobile}
+        enableDamping={!isMobile}
         maxDistance={20}
         minDistance={5}
         minPolarAngle={Math.PI / 5}
@@ -41,10 +42,7 @@ const HeroExperience = () => {
       <Suspense fallback={null}>
         <HeroLights />
 
-        <Particles
-  key={isMobile ? "mobile-particles" : "desktop-particles"}
-  count={isMobile ? 25 : 60}
-/>
+        <Particles count={isMobile ? 20 : 50} />
 
         <group
           scale={isMobile ? 0.7 : 1}
