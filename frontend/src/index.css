@@ -470,3 +470,26 @@ section {
 .card:hover::before {
   opacity: 1;
 }
+
+.portfolio-content {
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.portfolio-hidden {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+.portfolio-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-content {
+    transition: none;
+  }
+}
